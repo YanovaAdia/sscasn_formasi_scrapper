@@ -38,7 +38,10 @@ time.sleep(2)
 
 next_button = driver.find_element(By.CLASS_NAME, "ant-pagination-next")
 
-temp_data = {
+
+while True:
+
+    temp_data = {
     "jabatan" : [],
     "instansi" : [],
     "unit_kerja" : [],
@@ -65,13 +68,10 @@ for i in range(len(col)):
     temp_data["kebutuhan"].append(row[6].text)
     temp_data["verifikasi"].append(row[7].text)
 
+    if next_button.is_enabled() == False:
+        break;
+    driver.execute_script("arguments[0].click();", next_button)
+
 df = pd.DataFrame(temp_data, index=None)
 df.to_csv("data_formasi.csv", index=False)
 driver.quit()
-
-# while True:
-#     if next_button.is_enabled() == False:
-#         break;
-#     for i in range(10):
-
-#     driver.execute_script("arguments[0].click();", next_button)
