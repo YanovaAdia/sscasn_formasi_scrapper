@@ -21,6 +21,16 @@ def clear_dict():
     }
     return temp_data
 
+def hitung_page(total):
+    len_page = 0
+    while True:
+        if total <= 10:
+            len_page += 1
+            break
+
+        total -= 10
+        len_page += 1
+    return len_page
 
 # hanya untuk testing
 detail = ["S-1/Sarjana", "S-1 INFORMATIKA", "CPNS"]
@@ -64,18 +74,7 @@ try :
 
     total = int(total_item.text.split(" ")[2])
 
-    len_page = 0
-
-    while True:
-        if total <= 10:
-            len_page += 1
-            break
-        total -= 10
-        len_page += 1
-
-
-
-    for i in range(len_page):
+    for i in range(hitung_page(total)):
         time.sleep(2)
         temp_data = clear_dict()
         col = driver.find_elements(By.XPATH, f'//table/tbody/tr')
@@ -103,4 +102,5 @@ except:
 
 
 main_df.to_csv("data_formasi.csv", index=False)
+main_df.to_excel("data_formasi.xlsx", index=False)
 driver.quit()
